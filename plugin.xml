@@ -16,7 +16,7 @@
   </js-module>
 
   <platform name="android">
-    <source-file src="src/android/crc32.java" target-dir="src/org/apache/cordova" />
+    <source-file src="src/android/Crc32.java" target-dir="src/org/apache/cordova" />
 
     <config-file target="res/xml/config.xml" parent="/widget">
       <feature name="Crc32">
