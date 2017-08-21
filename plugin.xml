@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin xmlns="http://phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-x-crc32"
+    version="0.1.0">
+  <engines>
+    <engine name="cordova" version=">=3.3.0" />
+  </engines>
+  <dependency id="cordova-plugin-file" version=">=2.0.0" />
+
+  <name>cordova-plugin-x-crc32</name>
+  <description>Provide checksum for files</description>
+
+  <js-module src="crc32.js" name="Crc32">
+    <clobbers target="crc32" />
+  </js-module>
+
+  <platform name="android">
+    <source-file src="src/android/crc32.java" target-dir="src/org/apache/cordova" />
+
+    <config-file target="res/xml/config.xml" parent="/widget">
+      <feature name="Crc32">
+        <param name="android-package" value="org.apache.cordova.Crc32"/>
+      </feature>
+    </config-file>
+  </platform>
+
+  <platform name="ios">
+    <source-file src="src/ios/Crc32Plugin.m" />
+    <header-file src="src/ios/Crc32Plugin.h" />
+
+
+    <config-file target="config.xml" parent="/widget">
+      <feature name="Crc32">
+        <param name="ios-package" value="Crc32Plugin"/>
+      </feature>
+    </config-file>
+  </platform>
+</plugin>
