@@ -3,9 +3,12 @@ package org.apache.cordova;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.File;
 
+import android.net.Uri;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaResourceApi.OpenForReadResult;
 import org.apache.cordova.PluginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +44,21 @@ public class Crc32 extends CordovaPlugin {
 
             String fileName = args.getString(0);
 
-            InputStream inputStream = new BufferedInputStream(new FileInputStream(fileName));
+            Uri fileUri = getUriForArg(fileName);
+
+            CordovaResourceApi resourceApi = webView.getResourceApi();
+
+            File tempFile = resourceApi.mapUriToFile(fileUri);
+            if (tempFile == null || !tempFile.exists()) {
+                String errorMessage = "File " + fileName + " does not exist";
+                callbackContext.error(errorMessage);
+                Log.e(LOG_TAG, errorMessage);
+                return;
+            }
+
+            OpenForReadResult fileRead = resourceApi.openForRead(fileUri);
+
+            InputStream inputStream = new BufferedInputStream(fileRead.inputStream);
             CRC32 crc = new CRC32();
             for (int count; (count = inputStream.read()) != -1; ) {
                 crc.update(count);
@@ -57,6 +74,12 @@ public class Crc32 extends CordovaPlugin {
             callbackContext.error(errorMessage);
             Log.e(LOG_TAG, errorMessage, e);
         }
+    }
+
+    private Uri getUriForArg(String arg) {
+        CordovaResourceApi resourceApi = webView.getResourceApi();
+        Uri target = Uri.parse(arg);
+        return resourceApi.remapUri(target.getScheme() != null ? target : Uri.fromFile(new File(arg)));
     }
 
 }

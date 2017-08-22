@@ -2,7 +2,7 @@
 <plugin xmlns="http://phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-x-crc32"
-    version="0.1.0">
+    version="0.1.1">
   <engines>
     <engine name="cordova" version=">=3.3.0" />
   </engines>
@@ -22,6 +22,10 @@
       <feature name="Crc32">
         <param name="android-package" value="org.apache.cordova.Crc32"/>
       </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     </config-file>
   </platform>
 

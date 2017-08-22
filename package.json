@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-x-crc32",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provide the checksum of files",
   "main": "crc32.js",
   "scripts": {

@@ -1,4 +1,4 @@
-# cordova-plugin-x-crc32 - v0.1.0
+# cordova-plugin-x-crc32 - v0.1.1
 A Cordova plugin to provide the checksum of files.
 
 ## Installation
@@ -12,5 +12,7 @@ crc32.crc32(filepath: string, callback: (crc32:string) => void);
 ```
 
 ## Release Notes
+### 0.1.1 (Aug 22, 2017)
+- Fix error on Android.
 ### 0.1.0 (Aug 21, 2017)
 - First release for Android.
