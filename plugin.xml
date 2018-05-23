@@ -30,11 +30,10 @@
   </platform>
 
   <platform name="ios">
-    <source-file src="src/ios/Crc32Plugin.m" />
-    <header-file src="src/ios/Crc32Plugin.h" />
+    <source-file src="src/ios/crc32.swift" />
+    <source-file src="src/ios/Crc32Plugin.swift" />
 
-
-    <config-file target="config.xml" parent="/widget">
+    <config-file target="config.xml" parent="/*">
       <feature name="Crc32">
         <param name="ios-package" value="Crc32Plugin"/>
       </feature>
