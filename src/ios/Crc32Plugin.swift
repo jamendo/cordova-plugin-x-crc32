@@ -3,6 +3,12 @@ import Foundation
 
 @objc(Crc32Plugin) class Crc32Plugin : CDVPlugin {
     func crc32(_ command: CDVInvokedUrlCommand) {
+        DispatchQueue.main.async {
+            self._crc32(command)
+        }
+    }
+
+    func _crc32(_ command: CDVInvokedUrlCommand) {
         var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
         let urlString = command.arguments[0] as! String
 
