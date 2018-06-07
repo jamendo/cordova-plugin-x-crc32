@@ -4,16 +4,11 @@ import Foundation
 @objc(Crc32Plugin) class Crc32Plugin : CDVPlugin {
     func crc32(_ command: CDVInvokedUrlCommand) {
         var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
-
         let url = URL(string: command.arguments[0] as! String)!
-
-        print(url)
-
-
         var content: String
 
         do {
-            content = try String(contentsOf: url, encoding: .utf8)
+            content = try String(contentsOf: url, encoding: .ascii)
         }
         catch {
             print(error)
