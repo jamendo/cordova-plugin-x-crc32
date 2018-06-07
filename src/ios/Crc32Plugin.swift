@@ -4,23 +4,26 @@ import Foundation
 @objc(Crc32Plugin) class Crc32Plugin : CDVPlugin {
     func crc32(_ command: CDVInvokedUrlCommand) {
         var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
-        let url = URL(string: command.arguments[0] as! String)!
-        var content: String
+        let urlString = command.arguments[0] as! String
 
-        do {
-            content = try String(contentsOf: url, encoding: .ascii)
-        }
-        catch {
-            print(error)
+        let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL!
+        let destinationUrl = documentsUrl?.appendingPathComponent((urlString as NSString).lastPathComponent)
+        
+        let data = FileManager.default.contents(atPath: destinationUrl!.absoluteString.replacingOccurrences(of: "file://", with: ""))
+        
+        guard data != nil else {
             pluginResult = CDVPluginResult(
                 status: CDVCommandStatus_ERROR,
-                messageAs: "Failed to open file at \(url)"
+                messageAs: "Unable to read content from \(destinationUrl?.absoluteString)"
+            )
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
             )
             return
         }
 
-        let crc = CRC32()
-        crc.run(data: content.data(using: .utf8)!)
+        let crc = CRC32(data: data!)
         let crcCode = String(format: "%2X", crc.hashValue)
 
         pluginResult = CDVPluginResult(
