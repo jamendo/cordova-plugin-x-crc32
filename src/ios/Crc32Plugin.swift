@@ -2,7 +2,7 @@ import Foundation
 
 
 @objc(Crc32Plugin) class Crc32Plugin : CDVPlugin {
-    func crc32(_ command: CDVInvokedUrlCommand) {
+    @objc(crc32:) func crc32(_ command: CDVInvokedUrlCommand) {
         DispatchQueue.main.async {
             self._crc32(command)
         }
